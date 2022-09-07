@@ -1,0 +1,172 @@
+global:
+  airgap: "false"
+  ha: false
+
+  # -- Private Docker Image registry, will override all registries defined in subcharts
+  imageRegistry: ""
+
+  loadbalancerURL: http://34.71.154.68
+  mongoSSL: false
+  storageClassName: "standard"
+
+## !! Do not have ingress enabled and istio enabled at the same time.
+# --- Enabling ingress create kubernetes Ingress Objects for nginx.
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - '34.71.154.68'
+  tls:
+    enabled: false
+    secretName: mycert
+
+# -- Istio Ingress Settings
+istio:
+  enabled: false
+  gateway:
+    create: true
+    port: 443
+    protocol: HTTPS
+  hosts:
+    - '*'
+  tls:
+    credentialName: mycert
+    minProtocolVersion: TLSV1_2
+    mode: SIMPLE
+  virtualService:
+    hosts:
+      - "myhostname.foo.bar"
+
+harness:
+  ci:
+    # -- Enabled will deploy CI to your cluster
+    enabled: true
+
+    ci-manager:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+  platform:
+    # -- Access control settings (taints, tolerations, etc)
+    access-control:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- change-data-capture settings (taints, tolerations, etc)
+    change-data-capture:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- cv-nextgen settings (taints, tolerations, etc)
+    cv-nextgen:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- delegate proxy settings (taints, tolerations, etc)
+    delegate-proxy:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- gateway settings (taints, tolerations, etc)
+    gateway:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- harness-manager (taints, tolerations, etc)
+    harness-manager:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- le-nextgen (taints, tolerations, etc)
+    le-nextgen:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- log-service (taints, tolerations, etc)
+    log-service:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    # -- minio (taints, tolerations, etc )
+    minio:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    mongodb:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    next-gen-ui:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    ng-auth-ui:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    ng-manager:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    pipeline-service:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    platform-service:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    redis:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    scm-service:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    template-service:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    ti-service:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    timescaledb:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+  sto:
+    # -- Enabled will deploy STO to your cluster
+    enabled: false
+
+    sto-core:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
+
+    sto-manager:
+      affinity: {}
+      nodeSelector: {}
+      tolerations: []
