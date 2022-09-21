@@ -22,6 +22,6 @@ do
   echo "$line"
   docker pull "$line"
   image=$(echo $line |sed 's/docker.io\///g' | sed 's/harness\///g' | sed 's/curl\///g'| sed 's/bitnami\///g' | sed 's/timescale\///g' )
-  docker tag $image "$repository$image"
+  docker tag $line "$repository$image"
   docker push "$repository$image"
 done < "$images_file"
