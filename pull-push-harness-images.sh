@@ -21,7 +21,6 @@ while IFS= read -r line
 do
   echo "$line"
   docker pull "$line"
-  image=$(echo $line |sed 's/docker.io\///g')
   image=$(echo $line |sed 's/docker.io\///g' | sed 's/harness\///g' | sed 's/curl\///g'| sed 's/bitnami\///g' )
   docker tag $image "$repository$image"
   docker push "$repository$image"
