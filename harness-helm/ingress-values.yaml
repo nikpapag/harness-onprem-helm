@@ -1,0 +1,608 @@
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ng-manager
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: ng-manager
+                port:
+                  number: 7090
+            path: /ng/api(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sto-core
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: sto-core
+                port:
+                  number: 4000
+            path: /sto/(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sto-manager
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: sto-manager
+                port:
+                  number: 7090
+            path: /sto-manager/(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: next-gen-ui
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: next-gen-ui
+                port:
+                  number: 80
+            path: /ng(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ci-manager
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: ci-manager
+                port:
+                  number: 7090
+            path: /ci(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cv-nextgen
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: cv-nextgen
+                port:
+                  number: 6060
+            path: /cv(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ui
+  namespace: mynamespace
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: minio
+                port:
+                  number: 9000
+            path: /minio
+            pathType: Prefix
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logs-service-minio
+  namespace: mynamespace
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: minio
+                port:
+                  number: 9000
+            path: /logs/
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: log-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: log-service
+                port:
+                  number: 8079
+            path: /log-service(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: gateway
+                port:
+                  number: 80
+            path: /gateway(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: access-control
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: access-control
+                port:
+                  number: 9006
+            path: /authz(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ti-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: ti-service
+                port:
+                  number: 8078
+            path: /ti-service(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: template-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: template-service
+                port:
+                  number: 15002
+            path: /template(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: delegate-proxy
+  namespace: mynamespace
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: delegate-proxy
+                port:
+                  number: 80
+            path: /storage
+            pathType: Prefix
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pipeline-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: pipeline-service
+                port:
+                  number: 12001
+            path: /pipeline(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: notification-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: platform-service
+                port:
+                  number: 9005
+            path: /notifications(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: audit-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: platform-service
+                port:
+                  number: 9005
+            path: /audit(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: resourcegroup-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: platform-service
+                port:
+                  number: 9005
+            path: /resourcegroup(/|$)(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: verification-service
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: verification-svc
+                port:
+                  number: 7070
+            path: /verification
+            pathType: Prefix
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: harness-manager-api
+  namespace: mynamespace
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: harness-manager
+                port:
+                  number: 9090
+            path: /api
+            pathType: Prefix
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: harness-manager-stream
+  namespace: mynamespace
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: harness-manager
+                port:
+                  number: 9090
+            path: /stream
+            pathType: Prefix
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ng-auth-ui
+  namespace: mynamespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: ng-auth-ui
+                port:
+                  number: 80
+            path: /auth(.*)
+            pathType: ImplementationSpecific
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
+---
+# Source: harness-demo/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: harness-ui
+  namespace: mynamespace
+spec:
+  ingressClassName: "nginx-namespace"
+  rules:
+    - host: nik.harnessemea.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: next-gen-ui
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+      host: "nikp.harnessemea.co.uk"
+  tls:
+    - hosts:
+        - "nikp.harnessemea.co.uk"
+      secretName: mycert
