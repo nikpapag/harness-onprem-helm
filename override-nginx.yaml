@@ -11,14 +11,14 @@ global:
 
 ## !! Do not have ingress enabled and istio enabled at the same time.
 # --- Enabling ingress create kubernetes Ingress Objects for nginx.
-ingress:
-  enabled: true
-  className: "nginx"
-  hosts:
-    - '34.71.154.68'
-  tls:
-    enabled: false
-    secretName: mycert
+  ingress:
+    enabled: true
+    className: "nginx"
+    hosts:
+      - '34.71.154.68'
+    tls:
+      enabled: false
+      secretName: mycert
 
 # -- Istio Ingress Settings
 istio:
