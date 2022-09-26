@@ -1,0 +1,840 @@
+{{- if .Values.global.ingress.enabled -}}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ng-manager
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: ng-manager
+              servicePort: 7090
+            path: /ng/api(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+    {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+    {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sto-core
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:   
+              serviceName: sto-core
+              servicePort: 4000
+            path: /sto/(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sto-manager
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: sto-manager
+              servicePort: 7090
+            path: /sto-manager/(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: et-collector
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:              
+              serviceName: et-collector
+              servicePort: 6070
+            path: /et-collector(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: et-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:             
+              serviceName: et-service
+              servicePort: 9191
+            path: /et(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: next-gen-ui
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:              
+              serviceName: next-gen-ui
+              servicePort: 80
+            path: /ng(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ci-manager
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: ci-manager
+              servicePort: 7090
+            path: /ci(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cv-nextgen
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend: 
+              serviceName: cv-nextgen
+              servicePort: 6060
+            path: /cv(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: minio-ui
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:   
+              serviceName: minio
+              servicePort: 9000
+            path: /minio
+            pathType: Prefix
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: logs-service-minio
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: minio
+              servicePort: 9000
+            path: /logs/
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: log-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:    
+              serviceName: log-service
+              servicePort: 8079
+            path: /log-service(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:           
+              serviceName: gateway
+              servicePort: 80
+            path: /gateway(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: access-control
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend: 
+              serviceName: access-control
+              servicePort: 9006
+            path: /authz(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ti-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:           
+              serviceName: ti-service
+              servicePort: 8078
+            path: /ti-service(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: template-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:            
+              serviceName: template-service
+              servicePort: 15002
+            path: /template(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: delegate-proxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: delegate-proxy
+              servicePort: 80
+            path: /storage
+            pathType: Prefix
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pipeline-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:             
+              serviceName: pipeline-service
+              servicePort: 12001                 
+            path: /pipeline(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+   {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: notification-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:             
+              serviceName: platform-service
+              servicePort: 9005
+            path: /notifications(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: audit-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:              
+              serviceName: platform-service
+              servicePort: 9005
+            path: /audit(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: resourcegroup-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:          
+              serviceName: platform-service
+              servicePort: 9005
+            path: /resourcegroup(/|$)(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: verification-service
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:             
+              serviceName: verification-svc
+              servicePort: 7070
+            path: /verification
+            pathType: Prefix
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: harness-manager-api
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: harness-manager
+              servicePort: 9090
+            path: /api
+            pathType: Prefix
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: harness-manager-stream
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:             
+              serviceName: harness-manager
+              servicePort: 9090
+            path: /stream
+            pathType: Prefix
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ng-auth-ui
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:              
+              serviceName: ng-auth-ui
+              servicePort: 80
+            path: /auth(.*)
+            pathType: ImplementationSpecific
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: harness-ui
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:             
+              serviceName: next-gen-ui
+              servicePort: 80
+            path: /
+            pathType: Prefix
+  {{- if .Values.global.ingress.tls.enabled }}
+  {{- range .Values.global.ingress.hosts }}
+      host: {{ . | quote }}
+  {{- end }}
+  tls:
+    - hosts:
+        {{- range .Values.global.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
+  {{- end }}
+
+{{- end }}
