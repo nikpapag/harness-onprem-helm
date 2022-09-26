@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: harness-timescale
+  namespace: harness
+  labels:
+    app.kubernetes.io/component: rbac
+subjects:
+  - kind: ServiceAccount
+    name: harness-timescale
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: harness-timescale
