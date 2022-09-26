@@ -1,0 +1,29 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-role
+  namespace: harness-rbac
+rules:
+  - apiGroups:
+        - ""
+    resources:
+      - secrets
+      - serviceaccounts
+      - configmaps
+      - persistentvolumeclaims
+      - services
+      - endpoints
+      - pods
+      - endpoints/restricted
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups:
+        - apps
+        - autoscaling
+        - batch
+        - extensions
+        - policy
+        - networking.k8s.io
+        - rbac.authorization.k8s.io
+    resources:
+      - "*"
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
