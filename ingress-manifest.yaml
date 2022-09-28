@@ -435,6 +435,12 @@ kind: Ingress
 metadata:
   name: delegate-proxy
   namespace: harness
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   rules:
     - http:
@@ -681,30 +687,4 @@ spec:
       secretName: mycert
 
 
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: harness-ui
-  namespace: harness
-  annotations:
-    kubernetes.io/ingress.allow-http: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP
-spec:
-  rules:
-    - http:
-        paths:
-          - backend:             
-              serviceName: next-gen-ui
-              servicePort: 80
-            path: /
-            pathType: Prefix
-      host: <<hostname>>
-  tls:
-    - hosts:    
-        - <<hostname>>     
-      secretName: mycert
 
