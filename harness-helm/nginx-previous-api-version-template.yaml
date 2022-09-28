@@ -803,38 +803,4 @@ spec:
         {{- end }}
       secretName: {{ .Values.global.ingress.tls.secretName }}
   {{- end }}
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: harness-ui
-  namespace: {{ .Release.Namespace }}
-  annotations:
-    kubernetes.io/ingress.allow-http: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
-    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP
-spec:
-  rules:
-    - http:
-        paths:
-          - backend:             
-              serviceName: next-gen-ui
-              servicePort: 80
-            path: /
-            pathType: Prefix
-  {{- if .Values.global.ingress.tls.enabled }}
-  {{- range .Values.global.ingress.hosts }}
-      host: {{ . | quote }}
-  {{- end }}
-  tls:
-    - hosts:
-        {{- range .Values.global.ingress.hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .Values.global.ingress.tls.secretName }}
-  {{- end }}
-
 {{- end }}
