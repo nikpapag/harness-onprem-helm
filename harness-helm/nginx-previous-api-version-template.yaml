@@ -513,6 +513,12 @@ kind: Ingress
 metadata:
   name: delegate-proxy
   namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   rules:
     - http:
