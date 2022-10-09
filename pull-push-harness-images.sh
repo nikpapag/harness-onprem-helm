@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #Change to the cloned repo path of the chart
-helm_chart_path="/Users/nikp/socgen/onprem-7-sep/helm-charts/src/demo/"
+helm_chart_path="charts/harness"
 #File to store the image list
-images_file="harness-images.txt"
+images_file="harness-images.yaml"
 #Private repository url
 repository="nikpnexus.co.uk:7777/repository/harness/"
 
